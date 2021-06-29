@@ -13,10 +13,6 @@ public class BinarySearchTree<T extends Comparable<T>> {
             this.left = left;
             this.right = right;
         }
-
-        /* public boolean isLeaf(){
-            return this.left==null&&this.right==null;
-        } */
     }
 
     //Objeto raiz de arbol
