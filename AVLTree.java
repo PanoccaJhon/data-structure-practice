@@ -1,3 +1,7 @@
+
+/**
+ * @author Jhon Franklin Panocca Merma
+ */
 public class AVLTree<T extends Comparable<T>> {
     
     /**
@@ -220,7 +224,77 @@ public class AVLTree<T extends Comparable<T>> {
      * @return
      */
     private Node<T> deleteNode(T element, Node<T> root){
+        if(element.compareTo(root.data) < 0)
+            root.left = deleteNode(element, root.left);
+        else if(element.compareTo(root.data)>0)
+            root.right = deleteNode(element, root.right);
+        else {
+            if(root.left == null)
+                return root.right;
+            else if(root.right == null)
+                return root.left;
+            else{
+                Node<T> tmp = root;
+                root = min(tmp.right);
+                root.right = deleteMin(tmp.right);
+                root.left = tmp.left;
+            }
+        }
+        root.height = getMaxHeight(root.left.height, root.right.height)+1;
         return root;
+    }
+
+    /**
+     * Devuelve el Nodo mas pequeño del arbol dado
+     * @param root
+     * @return
+     */
+    private Node<T> min(Node<T> root){
+        if(root.left == null)
+            return root;
+        return min(root.left);
+    }
+
+    /**
+     * Elimina el nodo mas bajo del arbol dado
+     * @param root
+     * @return
+     */
+    private Node<T> deleteMin(Node<T> root){
+        if(root.left == null)
+            return root.right;
+        root.left = deleteMin(root.left);
+
+        root.height = getMaxHeight(root.left.height, root.right.height)+1;
+
+        return balance(root);
+    }
+
+    /**
+     * Metodo que restaura la propiedad del arbol AVL
+     * @param root
+     * @return
+     */
+    private Node<T> balance(Node<T> root){
+        if(balanceFactor(root) > 1){
+            if(balanceFactor(root.right) < 0)
+                root.right = rotateRight(root.right);
+            root = rotateLeft(root);
+        }else if(balanceFactor(root) < -1){
+            if(balanceFactor(root.left) > 0)
+                root.left = rotateLeft(root.left);
+            root = rotateRight(root);
+        }
+        return root;
+    }
+
+    /**
+     * Retorna el factor de balance de un nodo
+     * @param root
+     * @return
+     */
+    private int balanceFactor(Node<T> root){
+        return root.right.height-root.left.height;
     }
 
 
