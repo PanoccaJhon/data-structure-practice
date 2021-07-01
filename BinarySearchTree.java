@@ -12,7 +12,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
             this.data = data;
             this.left = left;
             this.right = right;
-        }
+        } 
     }
 
     //Objeto raiz de arbol
