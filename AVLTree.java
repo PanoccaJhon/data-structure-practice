@@ -1,5 +1,8 @@
 public class AVLTree<T extends Comparable<T>> {
     
+    /**
+     * Clase privada Node, nodo del arbol
+     */
     private class Node<E>{
         Node<E> left, right;
         E data;
@@ -21,6 +24,9 @@ public class AVLTree<T extends Comparable<T>> {
      */
     private Node<T> root;
 
+    /**
+     * Constructor de clase AVLTree
+     */
     public AVLTree(){
         this.root = null;
     }
@@ -51,6 +57,13 @@ public class AVLTree<T extends Comparable<T>> {
     public void insert(T data){
         this.root = insert(data, this.root);
     }
+    /**
+     * Metodo para insertar un elemento al arbol,
+     * requiere parametro adicional: raiz de arbol
+     * @param data
+     * @param root
+     * @return
+     */
     private Node<T> insert(T data, Node<T> root){
 
         if(root == null)
@@ -82,7 +95,7 @@ public class AVLTree<T extends Comparable<T>> {
      * @param node
      * @return
      */
-    public Node<T> rotateLeft(Node<T> node){
+    private Node<T> rotateLeft(Node<T> node){
         Node<T> tmp = node.left;
         node.left = tmp.right;
         tmp.right = node;
@@ -97,7 +110,7 @@ public class AVLTree<T extends Comparable<T>> {
      * @param node
      * @return
      */
-    public Node<T> doubleRotateLeft(Node<T> node){
+    private Node<T> doubleRotateLeft(Node<T> node){
         node.left = rotateRight(node.left);
         return rotateLeft(node);
     }
@@ -107,7 +120,7 @@ public class AVLTree<T extends Comparable<T>> {
      * @param node
      * @return
      */
-    public Node<T> rotateRight(Node<T> node){
+    private Node<T> rotateRight(Node<T> node){
         Node<T> tmp = node.right;
         node.right = tmp.left;
         tmp.left = node;
@@ -122,8 +135,137 @@ public class AVLTree<T extends Comparable<T>> {
      * @param node
      * @return
      */
-    public Node<T> doubleRotateRight(Node<T> node){
+    private Node<T> doubleRotateRight(Node<T> node){
         node.right = rotateLeft(node.right);
         return rotateRight(node);
+    }
+
+    /**
+     * Metodo que retorna el numero total de nodos
+     * del arbol
+     * @return
+     */
+    public int getNumberAllNodes(){
+        return getNumberAllNodes(this.root);
+    }
+
+    /**
+     * Metodo que retorna el numero total de nodos
+     * del arbol, requiere un parametro de raiz de
+     * arbol
+     * @param root
+     * @return
+     */
+    private int getNumberAllNodes(Node<T> root){
+        if(root==null)
+            return 0;
+        else{
+            int l = 1;
+            l = l + getNumberAllNodes(root.left);
+            l = l + getNumberAllNodes(root.right);
+            return l;
+        }
+    }
+
+    /**
+     * Metodo para buscar un elemento en el arbol,
+     * devuelve el verdadero si el elemento se encuentra
+     * en el arbol, de lo contrario devuelve falso;
+     * @param element
+     * @return
+     */
+    public boolean search(T element){
+        return search(element, this.root);
+    }
+
+    /**
+     * Metodo para buscar un elemento en el arbol,
+     * devuelve el verdadero si el elemento se encuentra
+     * en el arbol, de lo contrario devuelve falso; 
+     * requiere un parametro adicional: raiz de arbol
+     * @param element
+     * @param root
+     * @return
+     */
+    private boolean search(T element, Node<T> root){
+        boolean exists= false;
+        while(root!=null && !exists){
+            T root_value = root.data;
+            if(element.compareTo(root_value)<0)
+                root = root.left;
+            else if(element.compareTo(root_value)>0)
+                root = root.right;
+            else{
+                exists = true;
+                break;
+            }
+            exists = search(element,root);
+        }
+
+        return exists;
+    }
+
+    /**
+     * Metodo para eliminar un nodo del arbol
+     * @param element
+     */
+    public void deleteNode(T element){
+        this.root = deleteNode(element, this.root);
+    }
+    /**
+     * Metodo para eliminar un nodo del arbol, 
+     * requiere parametro: raiz
+     * @param element
+     * @param root
+     * @return
+     */
+    private Node<T> deleteNode(T element, Node<T> root){
+        return root;
+    }
+
+
+    /**
+     * Funcion que imprime el recorrido In Orden
+     * en consola
+     */
+    public void inOrder(){
+        inOrder(this.root);
+    }
+    private void inOrder(Node<T> root){
+        if(root!=null){
+            inOrder(root.left);
+            System.out.print(root.data+" ");
+            inOrder(root.right);
+        }
+    }
+
+    /**
+     * Funcion que imprime el recorrido Pre Orden
+     * en consola
+     */
+    public void preOrder(){
+        preOrder(this.root);
+    }
+    private void preOrder(Node<T> root){
+        if(root!=null){
+            System.out.print(root.data+" ");
+            preOrder(root.left);
+            preOrder(root.right);
+        }
+    }
+
+    /**
+     * Funcion que imprime el recorrido Post Orden
+     * en consola
+     */
+    public void postOrder(){
+        postOrder(this.root);
+    }
+    private void postOrder(Node<T> root){
+        if(root!=null){
+            postOrder(root.left);
+            postOrder(root.right);
+            System.out.print(root.data+" ");
+        }
     }
 }
