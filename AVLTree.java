@@ -54,6 +54,10 @@ public class AVLTree<T extends Comparable<T>> {
         return left>right?left:right;
     }
 
+    private int getHeight(Node<T> node){
+        return node==null? -1: node.height;
+    }
+
     /**
      * Metodo para insertar un elemento al arbol
      * @param data
@@ -74,7 +78,7 @@ public class AVLTree<T extends Comparable<T>> {
             return new Node<T>(data);
         else if(data.compareTo(root.data)<0){
             root.left = insert(data, root.left);
-            if(root.left.height - root.right.height == 2){
+            if(getHeight(root.left) - getHeight(root.right) == 2){
                 if(data.compareTo(root.left.data)<0)
                     root = rotateLeft(root);
                 else
@@ -82,14 +86,14 @@ public class AVLTree<T extends Comparable<T>> {
             }
         }else if(data.compareTo(root.data)>0){
             root.right = insert(data, root.right);
-            if(root.right.height - root.left.height == 2){
+            if(getHeight(root.right) - getHeight(root.left) == 2){
                 if(data.compareTo(root.left.data)<0)
                     root = rotateRight(root);
                 else
                     root = doubleRotateRight(root);
             }
         }else{
-            root.height = getMaxHeight(root.left.height, root.right.height)+1;
+            root.height = getMaxHeight(getHeight(root.left), getHeight(root.right))+1;
         }
         return root;
     }
@@ -104,8 +108,8 @@ public class AVLTree<T extends Comparable<T>> {
         node.left = tmp.right;
         tmp.right = node;
 
-        node.height = getMaxHeight(node.left.height, node.right.height)+1;
-        tmp.height = getMaxHeight(tmp.left.height, node.height)+1;
+        node.height = getMaxHeight(getHeight(node.left), getHeight(node.right))+1;
+        tmp.height = getMaxHeight(getHeight(tmp.left), getHeight(node))+1;
         
         return tmp;
     }
@@ -129,8 +133,8 @@ public class AVLTree<T extends Comparable<T>> {
         node.right = tmp.left;
         tmp.left = node;
 
-        node.height = getMaxHeight(node.left.height, node.right.height)+1;
-        tmp.height = getMaxHeight(tmp.right.height, node.height)+1;
+        node.height = getMaxHeight(getHeight(node.left), getHeight(node.right))+1;
+        tmp.height = getMaxHeight(getHeight(tmp.right), getHeight(node))+1;
         
         return tmp;
     }
@@ -240,7 +244,7 @@ public class AVLTree<T extends Comparable<T>> {
                 root.left = tmp.left;
             }
         }
-        root.height = getMaxHeight(root.left.height, root.right.height)+1;
+        root.height = getMaxHeight(getHeight(root.left), getHeight(root.right))+1;
         return root;
     }
 
@@ -265,7 +269,7 @@ public class AVLTree<T extends Comparable<T>> {
             return root.right;
         root.left = deleteMin(root.left);
 
-        root.height = getMaxHeight(root.left.height, root.right.height)+1;
+        root.height = getMaxHeight(getHeight(root.left), getHeight(root.right))+1;
 
         return balance(root);
     }
@@ -294,7 +298,7 @@ public class AVLTree<T extends Comparable<T>> {
      * @return
      */
     private int balanceFactor(Node<T> root){
-        return root.right.height-root.left.height;
+        return getHeight(root.right)-getHeight(root.left);
     }
 
 
@@ -308,7 +312,7 @@ public class AVLTree<T extends Comparable<T>> {
     private void inOrder(Node<T> root){
         if(root!=null){
             inOrder(root.left);
-            System.out.print(root.data+" ");
+            System.out.print(root.data+"("+balanceFactor(root)+") ");
             inOrder(root.right);
         }
     }
@@ -322,7 +326,7 @@ public class AVLTree<T extends Comparable<T>> {
     }
     private void preOrder(Node<T> root){
         if(root!=null){
-            System.out.print(root.data+" ");
+            System.out.print(root.data+"("+balanceFactor(root)+") ");
             preOrder(root.left);
             preOrder(root.right);
         }
@@ -339,7 +343,7 @@ public class AVLTree<T extends Comparable<T>> {
         if(root!=null){
             postOrder(root.left);
             postOrder(root.right);
-            System.out.print(root.data+" ");
+            System.out.print(root.data+"("+balanceFactor(root)+") ");
         }
     }
 }
