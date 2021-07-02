@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 /**
  * Test
+ * @author Jhon Franklin Panocca Merma
  */
 public class Test {
 

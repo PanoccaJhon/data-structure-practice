@@ -53,7 +53,12 @@ public class AVLTree<T extends Comparable<T>> {
     private int getMaxHeight(int left, int right){
         return left>right?left:right;
     }
-
+    
+    /**
+     * Metodo que devuelve la altura de un nodo
+     * @param node
+     * @return
+     */
     private int getHeight(Node<T> node){
         return node==null? -1: node.height;
     }
