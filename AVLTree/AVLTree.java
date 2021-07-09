@@ -37,7 +37,7 @@ public class AVLTree<T extends Comparable<T>> {
 
     /**
      * Metodo para ver si el arbol esta vacio
-     * @return
+     * @return retorna Verdadero si el arbol esta bacio, Falso en caso contrario.
      */
     public boolean isEmpty(){
         return this.root == null;
