@@ -1,3 +1,5 @@
+package AVLTree;
+
 import java.util.Scanner;
 
 /**

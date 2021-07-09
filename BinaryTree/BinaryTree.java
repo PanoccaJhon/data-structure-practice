@@ -1,3 +1,5 @@
+package BinaryTree;
+
 public class BinaryTree<E extends Comparable<E>> {
     // clase Node
     public class Node{

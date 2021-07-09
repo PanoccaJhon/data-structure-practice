@@ -1,3 +1,4 @@
+package BinarySearchTree;
 import java.lang.Exception;
 
 public class BinarySearchTree<T extends Comparable<T>> {
