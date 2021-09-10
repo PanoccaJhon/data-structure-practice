@@ -51,6 +51,8 @@ public class Test {
         System.out.println("\n\nEjercio 4: eliminar 100 en AVL 3");
         t3.deleteNode(100);
         t3.inOrder();
+
+        System.out.println("");
     }
 
     public static void testAVL(){
