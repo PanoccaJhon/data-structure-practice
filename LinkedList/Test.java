@@ -14,9 +14,19 @@ public class Test {
         mi_lista.insert(5);
         mi_lista.insert(6);
 
-        mi_lista.insert(2,8);
-
+        System.out.println("Lista luego de insertar datos:");
         mi_lista.printList();
+
+        System.out.println("Lista luego de inserción con index:");
+        mi_lista.insert(2,8);
+        mi_lista.printList();
+
+        System.out.println("Lista luego de eliminar el primer valor:");
+        mi_lista.remove(0);
+        mi_lista.printList();
+
+        System.out.println("el valor en el puesto 3 es: ");
+        System.out.println(">>> "+mi_lista.getValue(3-2));
 
         
     }

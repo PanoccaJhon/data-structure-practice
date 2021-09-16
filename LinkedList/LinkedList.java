@@ -78,15 +78,27 @@ public class LinkedList<T extends Comparable<T>> {
         return node;
     }
 
+    /**
+     * 
+     * @param index
+     * @return  Retorna un objeto generico con el valor buscado, si no encuentra una coinsidencia, es nulo
+     */
     public T getValue(int index){
         return getValue(this.root, index);
     }
 
+    /**
+     * 
+     * @param node
+     * @param index
+     * @return
+     */
     private T getValue(Node<T> node, int index){
         Node<T> temp = node;
         for (int i = 0; temp != null; i++) {
             if (index == i) 
                 return temp.value;
+            temp = temp.next;
         }
         return null;
     }
@@ -131,7 +143,9 @@ public class LinkedList<T extends Comparable<T>> {
         return node;
     }
 
-
+    /**
+     * Metodo que imprime en consola una lista de todos los datos almacenados en la estructura
+     */
     public void printList(){
         String list = "";
         Node<T> tmp = this.root;
