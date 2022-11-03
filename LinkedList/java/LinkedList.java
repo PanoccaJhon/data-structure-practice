@@ -1,4 +1,4 @@
-package LinkedList;
+package LinkedList.java;
 
 /**
  * @author Jhon Franklin Panocca Merma
